@@ -26,6 +26,11 @@ qt_add_executable(parkovi_ozera
     reportspage.h reportspage.cpp
 )
 
+# Іконка exe для Windows (файл app.rc підключає img/app.ico)
+if(WIN32)
+    target_sources(parkovi_ozera PRIVATE app.rc)
+endif()
+
 # SQL-скрипти та логотип ЖК вбудовуються в exe.
 qt_add_resources(parkovi_ozera "app_resources"
     PREFIX "/"
