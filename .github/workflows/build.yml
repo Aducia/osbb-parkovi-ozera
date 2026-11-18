@@ -21,7 +21,7 @@ jobs:
           cache: true
 
       - name: Configure
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S osbb_parkovi_ozera -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release
@@ -32,10 +32,10 @@ jobs:
           New-Item -ItemType Directory -Path dist | Out-Null
           Copy-Item build\Release\parkovi_ozera.exe dist\
           windeployqt --release --no-translations dist\parkovi_ozera.exe
-          Copy-Item README.md dist\
+          Copy-Item osbb_parkovi_ozera\README.md dist\
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: parkovi_ozera_windows
-          path: distч
+          path: dist
