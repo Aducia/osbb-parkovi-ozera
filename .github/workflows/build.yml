@@ -34,8 +34,24 @@ jobs:
           windeployqt --release --no-translations dist\parkovi_ozera.exe
           Copy-Item osbb_parkovi_ozera\README.md dist\
 
-      - name: Upload artifact
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup -y --no-progress
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          & $iscc "/DDistDir=$PWD\dist" "/O$PWD\installer_out" "osbb_parkovi_ozera\installer.iss"
+
+      - name: Upload portable folder
         uses: actions/upload-artifact@v4
         with:
           name: parkovi_ozera_windows
           path: dist
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: parkovi_ozera_installer
+          path: installer_out\ParkoviOzera_Setup.exe
